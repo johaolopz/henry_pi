@@ -1,0 +1,48 @@
+.card {
+    margin-top: 100px;
+    margin-left: 25px;
+    margin-right: 25px;
+    width: 8rem;
+    border: 2px solid green;
+    border-radius: 10px;
+    background-color: tomato;
+  }
+
+  .pokePhoto {
+    width: 100px;
+    height: 100px;
+    margin-top: -80px;
+  }
+  
+  .card-title {
+    margin-bottom: 15px;
+  }
+
+  .divDetail {
+      display: flex;
+      flex-direction: row;
+  }
+
+  .divLife {
+      display: flex;
+  }
+
+  .divForce {
+    display: flex;
+}
+  
+  #closeIcon {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 8px;
+    margin-top: 8px;
+  }
+  
+  .card-body {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+  }
+  

@@ -1,0 +1,55 @@
+.divLP {
+    display: flex;
+    width: 100%;
+}
+
+#wordsContainer {
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+width: 100%;
+}
+
+.grid1 {
+display: flex;
+width: 26%;
+}
+
+.grid2 {
+display: flex;
+width: 30%;
+}
+
+.grid3 {
+display: flex;
+margin-left: 2%;
+width: 44%;
+height: 0px;
+}
+
+#wordsPokemon {
+padding: 15% 35%;
+display: flex;
+width: 100%;
+}
+
+#wordsPokemon:hover{
+    transform: scale(1.15);
+  }
+
+@media (min-width: 900px) {
+    .grid1 {width: 30%;}
+        
+    .grid2 {width: 30%;}
+        
+    .grid3 {width: 40%;}
+}
+
+@media (max-width: 700px) {
+    #wordsPokemon {
+        display: flex;
+        margin-top: 80px;
+        padding: 0px 0px;
+        width: 225px;
+    }
+}

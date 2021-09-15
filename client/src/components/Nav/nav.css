@@ -1,0 +1,28 @@
+.navContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.divNav {
+    width: 100%;
+}
+
+.rightDiv {
+    display: flex;
+    flex-direction: row;
+}
+
+.a_Home {
+    display: flex;
+}
+
+.a_Create {
+    display: flex;
+}
+
+@media (max-width: 700px) {
+    .navContainer {
+       width: 100%;
+    }
+}

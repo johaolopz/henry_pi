@@ -1,0 +1,21 @@
+.divPokeBoard {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.cardsArea {
+    margin-top: 10px;
+    width: 80%;
+    height: 405px;
+    border: 2px solid yellow;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 172, 0.431);
+}
+
+@media (max-width: 700px) {
+    .cardsArea {
+       margin-top: 8px;
+       height: 670px;
+    }
+}
