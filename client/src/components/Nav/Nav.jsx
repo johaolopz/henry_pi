@@ -2,11 +2,12 @@ import React from "react";
 import {Link} from 'react-router-dom';
 import './nav.css';
 import SearchBar from "./SearchBar";
+import Home from "../Home/Home";
 
 function Nav({onSearch}) {
     return (
       <nav className='navContainer'>
-          <Link to='/home' className='a_Home'>
+          <Link to='/home' className='a_Home' >
             <div className='divLogo'>
                 {/* <img id="logoApp" src={Logo} width="30" height="30" className="d-inline-block align-top" alt="" /> */}
                 <h3>Home</h3>
