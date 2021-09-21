@@ -7,19 +7,32 @@ export default function Pokemon({pokemon}) {
     return (
         <div className="pokemon">
                 <div className="container">
-                    <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.idImg}.svg`} alt='not found' />
+                    <img className='imgPokemon' src={pokemon.img} alt='not found' />
                     <h2>{pokemon.name}</h2>
+                    <div>Number: #{pokemon.id}</div>
                     <div className="info">
-                        <div>
+                        <div className='col1'>
+                            <h4 className='typesTitle'>Types: </h4>
                             <ul>
                                 {pokeTypes}
-                            </ul>    
+                            </ul>
                         </div>
-                        {/* <div>Weather: {city.weather}</div>
-                        <div>Wind: {city.wind} km/h</div>
-                        <div>Amount of clouds: {city.clouds}</div>
-                        <div>Latitude: {city.latitud}º</div>
-                        <div>Longitude: {city.longitud}º</div> */}
+                        <div className='col2'>
+                            <h4 className='typesTitle'>Stats: </h4>
+                            <ul className='charList'>
+                                <li>Life: {pokemon.life}</li>
+                                <li>Force: {pokemon.force}</li>
+                                <li>Defense: {pokemon.defense}</li>
+                                <li>Speed: {pokemon.speed}</li>
+                            </ul>
+                        </div>
+                        <div className='col3'>
+                            <h4 className='typesTitle'>Extra Data: </h4>
+                            <ul>
+                                <li>Height: {pokemon.height}'</li>
+                                <li>Weight: {pokemon.weight}Kg</li>
+                            </ul>
+                        </div>
                     </div>
                     <br />
                     <Link to='/home'>

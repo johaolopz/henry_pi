@@ -20,8 +20,14 @@ function Home() {
             if(recurso.name !== undefined){
               const pokemon = {
                 id: recurso.id,
-                img: recurso.sprites.other['official-artwork'].front_default,
+                img: recurso.sprites.other.dream_world.front_default,
                 name: recurso.name,
+                life : recurso.base_experience,
+                force : recurso.base_experience,
+                defense : recurso.base_experience,
+                speed : recurso.base_experience,
+                height : recurso.height,
+                weight : recurso.weight,
                 types: recurso.types.map(elem => elem.type.name)
               };
               setpokemons(oldPokemons => [...oldPokemons, pokemon]);

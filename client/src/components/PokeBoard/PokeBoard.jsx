@@ -1,15 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import './pokeBoard.css';
 import Cards from '../Cards/Cards';
 import { getPokemons } from "../../redux/actions";
+import pokeBallLoading from '../../img/pokeBallLoading.gif'
 
 function PokeBoard({pokemons, onCloseLocal}) {
     const dispatch = useDispatch();
     const pokemons2 = useSelector(state => state.pokemons);
+    const loadPage = useSelector(state => state.loadPage);
+
     useEffect( () => {
-        dispatch(getPokemons())
+        dispatch(getPokemons());
     },[])
+
+    //##### PAGINACION #####
+    // const [page, setPage] = useState();
+    // const [totalPage, setTotalPage] = useState();
+
+
     if (pokemons[0] !== undefined){
         pokemons.map(elem => {
             elem.url = elem.img;
@@ -20,10 +29,15 @@ function PokeBoard({pokemons, onCloseLocal}) {
 
     return (
         <div className='divPokeBoard'>
-            <div className='cardsArea'>
+            {!loadPage ? (
+                <div>
+                    <img className='loadPokemons' src={pokeBallLoading} alt='not forund' />
+                    <p className='loadPokemons'>Loading...</p>)
+                </div>) :
+            (<div className='cardsArea'>
                 <Cards pokemons={pokemons[0] !== undefined ? pokemons : pokemons2}
                 onCloseLocal={pokemons[0] !== undefined ? onCloseLocal : false}/>
-            </div>
+            </div>)}
         </div>
     );
 }

@@ -7,10 +7,10 @@ export default function Cards({pokemons, onCloseLocal}) {
   return (
     <div className='pokeCards'>
       {pokemons.map(c => <Card
-          key={id++}
+          key={c.id}
+          id={c.id}
           name={c.name}
-          url={c.url}
-          idImg={c.idImg}
+          img={c.img}
           types={c.types}
           onCloseLocal={onCloseLocal}
         /> )}

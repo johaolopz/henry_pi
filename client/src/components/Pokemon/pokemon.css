@@ -1,6 +1,39 @@
-.ciudad {
+.pokemon {
     display: flex;
     justify-content: space-around;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.col1 {
+    display: flex;
+    flex-direction: column;
+}
+
+.col2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.col3 {
+    display: flex;
+    flex-direction: column;
+}
+
+h2{
+    margin: auto;
+}
+
+.typesTitle {
+    margin: auto;
+}
+
+.charList {
+    margin: auto;
 }
 
 .container{
@@ -9,6 +42,8 @@
     background-color: rgba(182, 179, 179, 0.527);
     margin-top: 30px;
     width: 50%;
+    text-align: center;
+    height: 370px;
 }
 
 .botonHome {
@@ -19,6 +54,11 @@
     border: 2px solid gray;
     font-size: 20px;
     width: 80%;
+}
+
+.imgPokemon {
+    width: 150px;
+    height: 150px;
 }
 
 .botonHome:hover {

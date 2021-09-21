@@ -3,8 +3,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
-//llamamos a la datbase de postgres
-const { Pokemon } = require('./db');
 
 require('./db.js');
 
@@ -25,12 +23,6 @@ server.use((req, res, next) => {
 });
 
 server.use('/', routes);
-
-server.get('/pokemons', (req, res) => {
-  Pokemon.findAll()
-  .then(pokemons => res.json(pokemons))
-  .catch(err => console.log(err))
-})
 
 // Error catching endware.
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
