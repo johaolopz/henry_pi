@@ -1,0 +1,19 @@
+.pageContainer {
+    display: flex;
+    justify-content: center;
+    height: 32px;
+}
+
+.pagination {
+    display: flex;
+    flex-direction: row;
+}
+
+.pagination-btn {
+    display: flex;
+}
+
+.pages {
+    display: flex;
+    color: white;
+}

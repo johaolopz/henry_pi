@@ -5,14 +5,14 @@ import { onClose } from "../../redux/actions";
 import { Link } from 'react-router-dom';
 
 export default function Card ({name, id, img, types, onCloseLocal}) {
-  const dispatch = useDispatch();
-  let onCloseFinal = () => {};
-  if (typeof onCloseLocal !== 'function') {
-    onCloseFinal = () => dispatch(onClose(name))
-  }
-  else {
-    onCloseFinal = () => onCloseLocal(name)
-  }
+  // const dispatch = useDispatch();
+  // let onCloseFinal = () => {};
+  // if (typeof onCloseLocal !== 'function') {
+  //   onCloseFinal = () => dispatch(onClose(name))
+  // }
+  // else {
+  //   onCloseFinal = () => onCloseLocal(name)
+  // }
   const pokeTypes = types.map(elem => <li>{elem}</li>)
 
     return (
@@ -22,9 +22,9 @@ export default function Card ({name, id, img, types, onCloseLocal}) {
             <img className='pokePhoto' src={img} alt='not found' />
           </div>
         </Link>
-        <div id="closeIcon" className="row">
+        {/* <div id="closeIcon" className="row">
             <button onClick={onCloseFinal} className="buttonX">X</button>
-        </div>
+        </div> */}
         <div className="card-body">
             <h5 className="card-title">{name}</h5>
           <div className="divDetail">

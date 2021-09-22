@@ -7,17 +7,12 @@ import pokeBallLoading from '../../img/pokeBallLoading.gif'
 
 function PokeBoard({pokemons, onCloseLocal}) {
     const dispatch = useDispatch();
-    const pokemons2 = useSelector(state => state.pokemons);
+    const pokeInit = useSelector(state => state.pokeInit);
     const loadPage = useSelector(state => state.loadPage);
 
     useEffect( () => {
         dispatch(getPokemons());
     },[])
-
-    //##### PAGINACION #####
-    // const [page, setPage] = useState();
-    // const [totalPage, setTotalPage] = useState();
-
 
     if (pokemons[0] !== undefined){
         pokemons.map(elem => {
@@ -35,7 +30,7 @@ function PokeBoard({pokemons, onCloseLocal}) {
                     <p className='loadPokemons'>Loading...</p>)
                 </div>) :
             (<div className='cardsArea'>
-                <Cards pokemons={pokemons[0] !== undefined ? pokemons : pokemons2}
+                <Cards pokemons={pokemons[0] !== undefined ? pokemons : pokeInit}
                 onCloseLocal={pokemons[0] !== undefined ? onCloseLocal : false}/>
             </div>)}
         </div>
