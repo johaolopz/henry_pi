@@ -5,6 +5,7 @@ import bg_Home from '../../img/bg_Home.png';
 import Nav from "../Nav/Nav.jsx";
 import PokeBoard from "../PokeBoard/PokeBoard.jsx";
 import Pokemon from '../Pokemon/Pokemon.jsx';
+import CreatePokemon from '../CreateForm/CreatePokemon';
 import { Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -12,7 +13,6 @@ function Home() {
     document.body.style = `background-image: url("${bg_Home}");`;
     const [pokemons, setpokemons] = useState([]);
     const pokemons2 = useSelector(state => state.pokemons);
-    const pokeInit = useSelector(state => state.pokeInit);
     //### PAGINATION ###
     const [page, setPage] = useState(0);
     const total = useSelector(state => state.total);
@@ -53,7 +53,7 @@ function Home() {
                 id: recurso.id,
                 img: recurso.img,
                 name: recurso.name,
-                types: recurso.types
+                typesPokemon: recurso.typesPokemon
               };
               fetch(`http://localhost:3001/pokemons/${recurso.id}`)
                 .then(r => r.json())
@@ -64,7 +64,7 @@ function Home() {
                   pokemon.speed = json2.speed;
                   pokemon.height = json2.height;
                   pokemon.weight = json2.weight;
-                  setpokemons(oldPokemons => [...oldPokemons, pokemon]);
+                  setpokemons([pokemon]);
                 })
             }
             else {
@@ -72,14 +72,14 @@ function Home() {
             }});
       }
 
-    // function onCloseLocal(name) {
-    //   setpokemons(oldPokemons => oldPokemons.filter(c => c.name !== name));
-    // }
+    function onCloseLocal() {
+      setpokemons([]);
+    }
 
     function onFilterLocal(pokeId) {
-      let pokemon = pokemons.filter(c => c.id === parseInt(pokeId));
+      let pokemon = pokemons.filter(c => c.id.toString() === pokeId.toString());
       if(pokemon.length === 0) {
-        pokemon = pokemons2.filter(c => c.id === parseInt(pokeId))
+        pokemon = pokemons2.filter(c => c.id.toString() === pokeId.toString())
       }
       return pokemon[0];
     }
@@ -87,32 +87,40 @@ function Home() {
     return (
         <div className='divHome'>
           <Route
-            path='/home'
+            path='/pokemon'
             render={() => <Nav onSearch={onSearch} />}
           />
           <Route
-            path='/home'
-            render={() => <Pagination
+            exact
+            path='/pokemon'
+            render={() => (pokemons[0] === undefined) ? (<Pagination
               page={page + 1}
               totalPages={total}
               onLeftClick={lastPage}
               onRightClick={nextPage}
-            />}
+            />) : ('')}
           />
           <Route
             exact
-            path='/home'
+            path='/pokemon'
             render={() => <PokeBoard pokemons={
               (pokemons[0] !== undefined) ? pokemons :
-              pokeInPage} /*onCloseLocal={onCloseLocal}*/
+              pokeInPage} onCloseLocal={(pokemons[0] !== undefined)
+                ? onCloseLocal
+                : false}
             page={page} total={total} />}
           />
           <Route
-        exact
-        path='/home/:pokeId'
-        render={({match}) => <Pokemon
-              pokemon={onFilterLocal(match.params.pokeId)}/>}
-      />
+          exact
+          path='/pokemon/create'
+          render={() => <CreatePokemon />}
+          />
+          <Route
+          exact
+          path='/pokemon/id/:pokeId'
+          render={({match}) => <Pokemon
+                pokemon={onFilterLocal(match.params.pokeId)}/>}
+          />
         </div>
     );
 }

@@ -18,10 +18,24 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+
+//importo mi modelo Type y axios
+const { conn, Type } = require('./src/db.js');
+const axios = require('axios');
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: true }).then( async() => {
+
+  //traigo los tipos de la pokeAPI.co
+  let typesAll = await axios("https://pokeapi.co/api/v2/type");
+  
+  //
+  await Type.bulkCreate(
+    typesAll.data.results && typesAll.data.results.map((elem) => ({
+      name : elem.name,
+    }))
+  );
+
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });

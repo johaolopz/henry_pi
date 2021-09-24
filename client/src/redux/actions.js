@@ -6,8 +6,8 @@ export function getPokemons() {
             return fetch("http://localhost:3001/pokemons")
             .then(response => response.json())
             .then(json => {
-              json.results.map((elem,index) => {
-                fetch(`http://localhost:3001/pokemons/${elem.id}`)
+              json.results.map(async (elem,index) => {
+                await fetch(`http://localhost:3001/pokemons/${elem.id}`)
                 .then(r => r.json())
                 .then(json2 => {
                 json.results[index].life = json2.life;

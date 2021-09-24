@@ -23,7 +23,7 @@ router.get('/', async (req, res) =>{
                                     id : await resp.data.id,
                                     name: await resp.data.name,
                                     img : await resp.data.sprites.other.dream_world.front_default,
-                                    types : await resp.data.types.map(elem => elem.type.name)
+                                    typesPokemon : await resp.data.types.map(elem => elem.type.name)
                                   };
                     }
                 catch{
@@ -42,7 +42,7 @@ router.get('/', async (req, res) =>{
                                 const resUrl = await axios.get(elem.url);
                                 elem.id = await resUrl.data.id;
                                 elem.img = await resUrl.data.sprites.other.dream_world.front_default;
-                                elem.types = await resUrl.data.types.map(elem => elem.type.name);
+                                elem.typesPokemon = await resUrl.data.types.map(elem => elem.type.name);
                                 return elem;
                               }));
           let allPokemons = dbPokemons.concat(apiPokemons);
@@ -76,11 +76,33 @@ router.get('/:idPokemon', async (req, res) =>{
                           speed : await resp.data.base_experience,
                           height : await resp.data.height,
                           weight : await resp.data.weight,
-                          types : await resp.data.types.map(elem => elem.type.name)
+                          typesPokemon : await resp.data.types.map(elem => elem.type.name)
                         };
         }
   if (searchPokemon) {
     res.status(400).json(searchPokemon);}
   else {
     res.status(200).json({message: "ID don't exist"})}
+});
+
+router.post('/', async (req, res)=>{
+  const {name, img, life, force, defense, speed, height, weight, typesPokemon}= req.body;
+  try{
+      const pokeCreate= await Pokemon.create({
+          id: uuidv4(), 
+          name,
+          img,
+          life,
+          force,
+          defense,
+          speed,
+          height,
+          weight,
+          typesPokemon
+      },{ fields: ["id","name","img","life","force","defense","speed","height","weight","typesPokemon"] });
+      pokeCreate && res.status(400).json(pokeCreate);
+      }
+  catch(error){
+      res.status(200).json({message:error});
+  }
 });

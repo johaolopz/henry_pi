@@ -11,7 +11,7 @@ function LandingPage() {
       <div id='wordsContainer'>
         <div className='grid1'></div>
         <div className='grid2'>
-          <Link to='/home'>
+          <Link to='/pokemon'>
             <img id='wordsPokemon' src={pokemonLogo} alt='not found' />
           </Link>
         </div>

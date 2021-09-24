@@ -13,6 +13,10 @@ module.exports = (sequelize) => {
       unique: true,
       allowNull: false
     },
+    img: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     life: {
       type: DataTypes.STRING,
       allowNull:false
@@ -38,7 +42,8 @@ module.exports = (sequelize) => {
       allowNull:false
     },
     typesPokemon: {
-      type: DataTypes.ARRAY(DataTypes.STRING)
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: false
     }
   },
   { timestamps: false }

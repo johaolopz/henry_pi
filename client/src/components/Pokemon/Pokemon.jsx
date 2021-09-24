@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import './pokemon.css';
 
 export default function Pokemon({pokemon}) {
-    const pokeTypes = pokemon.types.map(elem => <li>{elem}</li>)
+    const pokeTypes = pokemon.typesPokemon.map(elem => <li>{elem}</li>)
     return (
         <div className="pokemon">
                 <div className="container">
@@ -35,7 +35,7 @@ export default function Pokemon({pokemon}) {
                         </div>
                     </div>
                     <br />
-                    <Link to='/home'>
+                    <Link to='/pokemon'>
                         <button className='botonHome'>Home</button>
                     </Link>
             </div>

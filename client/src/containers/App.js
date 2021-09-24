@@ -13,7 +13,7 @@ function App() {
         render={() => <LandingPage />}
       />
       <Route
-        path='/home'
+        path='/pokemon'
         render={() => <Home />}
       />
     </div>
