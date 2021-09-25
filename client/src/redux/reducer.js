@@ -1,4 +1,4 @@
-import { GET_POKEMONS, CLOSE_POKEMONS } from './actions';
+import { GET_POKEMONS, ORDER_ASC_POKEMONS, ORDER_DESC_POKEMONS, ORDER_NUM_POKEMONS } from './actions';
 
 const initialState = {
     pokeInit: [],
@@ -16,12 +16,28 @@ export default function reducer(state = initialState, action) {
                 pokeInit: action.init,
                 pokemons: action.payload,
                 loadPage: true,
-                total: Math.ceil(action.total / 9)
+                total: Math.ceil((action.total-9) / 12) + 1
             }
-        case CLOSE_POKEMONS:
+        case ORDER_ASC_POKEMONS:
             return {
-                pokemons: state.pokemons.filter(c => c.name !== action.payload),
-                loadPage: true
+                pokeInit: action.init,
+                pokemons: action.payload,
+                loadPage: true,
+                total: Math.ceil((action.total-9) / 12) + 1
+            }
+        case ORDER_DESC_POKEMONS:
+        return {
+            pokeInit: action.init,
+            pokemons: action.payload,
+            loadPage: true,
+            total: Math.ceil((action.total-9) / 12) + 1
+        }
+        case ORDER_NUM_POKEMONS:
+            return {
+                pokeInit: action.init,
+                pokemons: action.payload,
+                loadPage: true,
+                total: Math.ceil((action.total-9) / 12) + 1
             }
         default:
             return state;

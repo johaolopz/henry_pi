@@ -1,10 +1,41 @@
 import React from "react";
 import { LeftArrow, RightArrow } from "./ArrowsSvg";
-import './pagination.css'
+import './pagination.css';
+import { orderByAsc, orderByDesc, orderByNumber } from "../../redux/actions";
+import { useDispatch, useSelector } from 'react-redux';
 
 const Pagination = ({ onLeftClick, onRightClick, page, totalPages }) => {
+  const pokemons2 = useSelector(state => state.pokemons);
+  const dispatch = useDispatch();
+
   return (
     <div className='pageContainer'>
+        <div className='divOrderBy'>
+          <label>Order by:</label>
+          <select name="selectOrderBy"
+            onChange={(e) => {
+              if (e.target.value === 'Ascendent')
+              {
+                dispatch(orderByAsc(pokemons2))
+                onLeftClick(true);
+              }
+              if (e.target.value === 'Descendent')
+              {
+                dispatch(orderByDesc(pokemons2))
+                onLeftClick(true);
+              }
+              if (e.target.value === 'Numeric')
+              {
+                dispatch(orderByNumber(pokemons2))
+                onLeftClick(true);
+              }
+              console.log('DENTRO DEL SELECT',page)
+              }}>
+            <option value="Ascendent" selected>A - Z</option>
+            <option value="Descendent" selected>Z - A</option>
+            <option value="Numeric">Numeric</option>
+          </select>
+        </div>
         <div className="pagination">
         <button className="pagination-btn" onClick={onLeftClick}>
             <div className="icon">
@@ -19,6 +50,14 @@ const Pagination = ({ onLeftClick, onRightClick, page, totalPages }) => {
             <RightArrow />
             </div>
         </button>
+        </div>
+        <div className='divFilterBy'>
+          <label>Filter by:</label>
+          <select name="selectFilterBy">
+            <option value="Name" selected>Name</option>
+            <option value="Type" selected>Type</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
     </div>
   );

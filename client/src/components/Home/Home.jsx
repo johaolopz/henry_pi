@@ -18,14 +18,23 @@ function Home() {
     const total = useSelector(state => state.total);
     const [pokeInPage, setPokeInPage] = useState([]);
 
-    const lastPage = () => {
-      const nextPage = Math.max(page - 1, 0);
+    const lastPage = (arg) => {
+      let nextPage;
+      if(arg===true) nextPage = 0;
+      else{
+      nextPage = Math.max(page - 1, 0);
+      }
       setPage(nextPage);
       let arrPoke = [];
-      let index = nextPage*9 -1;
-      for (let i=0; i<9; i++) {
-        index++;
-        arrPoke.push(pokemons2[index])
+      if(nextPage === 0) {
+        arrPoke = pokemons2.slice(0,9)
+      }
+      else {
+        let index = 12*(nextPage-1)+8;
+        for (let i=0; i<12; i++) {
+          index++;
+          arrPoke.push(pokemons2[index])
+        }
       }
       setPokeInPage(arrPoke)
     };
@@ -34,8 +43,8 @@ function Home() {
       const nextPage = Math.min(page + 1, total - 1);
       setPage(nextPage);
       let arrPoke = [];
-      let index = nextPage*9 -1;
-      for (let i=0; i<9; i++) {
+      let index = 12*(nextPage-1)+8;
+      for (let i=0; i<12; i++) {
         index++;
         arrPoke.push(pokemons2[index])
         if (!pokemons2[index+1]) break
@@ -107,8 +116,7 @@ function Home() {
               (pokemons[0] !== undefined) ? pokemons :
               pokeInPage} onCloseLocal={(pokemons[0] !== undefined)
                 ? onCloseLocal
-                : false}
-            page={page} total={total} />}
+                : false} />}
           />
           <Route
           exact

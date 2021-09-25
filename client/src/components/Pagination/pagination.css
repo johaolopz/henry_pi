@@ -1,7 +1,11 @@
 .pageContainer {
     display: flex;
-    justify-content: center;
+    justify-content:space-around;
     height: 32px;
+}
+
+label {
+    color: white;
 }
 
 .pagination {
