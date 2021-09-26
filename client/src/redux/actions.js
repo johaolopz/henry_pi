@@ -3,24 +3,25 @@ export const ORDER_ASC_POKEMONS = 'ORDER_ASC_POKEMONS';
 export const ORDER_DESC_POKEMONS = 'ORDER_DESC_POKEMONS';
 export const ORDER_MAX_FORCE_POKEMONS = 'ORDER_MAX_FORCE_POKEMONS';
 export const ORDER_MIN_FORCE_POKEMONS = 'ORDER_MIN_FORCE_POKEMONS';
+export const GET_TYPES = 'GET_TYPES';
 
 export function getPokemons() {
-    return function(dispatch) {
-            return fetch("http://localhost:3001/pokemons")
+    return async function(dispatch) {
+            return await fetch("http://localhost:3001/pokemons")
             .then(response => response.json())
             .then(json => {
-              json.results.map(async (elem,index) => {
+              Promise.all(json.results.map(async (elem,index) => {
                 await fetch(`http://localhost:3001/pokemons/${elem.id}`)
                 .then(r => r.json())
-                .then(json2 => {
-                json.results[index].life = json2.life;
-                json.results[index].force = json2.force;
-                json.results[index].defense = json2.defense;
-                json.results[index].speed = json2.speed;
-                json.results[index].height = json2.height;
-                json.results[index].weight = json2.weight;
+                .then(async json2 => {
+                json.results[index].life = await json2.life;
+                json.results[index].force = await json2.force;
+                json.results[index].defense = await json2.defense;
+                json.results[index].speed = await json2.speed;
+                json.results[index].height = await json2.height;
+                json.results[index].weight = await json2.weight;
                 })
-              });
+              }));
               return json
           })
           .then(json3 => dispatch({ type: GET_POKEMONS, payload: json3.results, init: json3.init, total: json3.total}))
@@ -103,6 +104,18 @@ export function orderByMaxForce(array) {
     return dispatch({ type: ORDER_MIN_FORCE_POKEMONS, payload: newArr, init: newArrInit, total: newTotal });
   };
 }
+
+
+export function getTypes() {
+  return async function(dispatch) {
+    return await fetch("http://localhost:3001/types")
+    .then(response => response.json())
+    .then(json => {
+      dispatch({ type: GET_TYPES, payload: json.map(elem => elem.name)})
+    })
+  }
+}
+
 
 // export function onClose(name) {
 //   return function(dispatch) {

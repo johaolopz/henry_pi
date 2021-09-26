@@ -13,14 +13,14 @@ input {
 .nameInput {
     font-weight: bold;
     color: greenyellow;
-    -webkit-text-stroke: 01px black;
+    -webkit-text-stroke: 1px black;
     /* color: rgb(41 75 132); */
     font-size: large;
 }
 
 .divName {
     display: flex;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .divImg {
@@ -86,7 +86,21 @@ input {
     padding-bottom: 20px;
 }
 
-.divAllTypes {
+.typesContainer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+    width: 75%;
+}
+
+.divTypesTitle {
+    font-weight: bold;
+    color: greenyellow;
+    -webkit-text-stroke: 1px black;
+    font-size: large;
+}
+
+.divAllTypes {
+    border: 2px solid black;
+    border-radius: 10px;
 }

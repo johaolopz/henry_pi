@@ -1,9 +1,32 @@
-import React, { useState } from "react";
+import React, {useState, useEffect} from "react";
 import './createPokemon.css';
 import axios from 'axios';
+import {useDispatch, useSelector} from 'react-redux';
+import { getTypes } from "../../redux/actions";
 
 function CreatePokemon() {
-    
+    const dispatch = useDispatch();
+    const [typeSelected, setTypeSelected] = useState([]);
+    const typesPokemons = useSelector(state => state.types);
+
+    useEffect( () => {
+        dispatch(getTypes());
+    },[])
+
+    let types = '';
+    let filtered = [];
+    if (typesPokemons){
+        const handled = e => {
+            if (e.target.checked) {
+            setTypeSelected([...typeSelected,e.target.value])}
+            else{
+                filtered = typeSelected.filter(el => el !== e.target.value)
+                setTypeSelected(filtered)
+            }
+                }
+        types = typesPokemons.map((elem) => <label><input type="checkbox" onChange={handled} className="ckbox" value={elem} /> {elem}</label>)
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
         axios.post('http://localhost:3001/pokemons', { 
@@ -14,9 +37,7 @@ function CreatePokemon() {
                 speed: document.querySelector('input[name=speed]').value,
                 height: document.querySelector('input[name=height]').value,
                 weight: document.querySelector('input[name=weight]').value,
-                typesPokemon: [document.querySelector('input[name=typesPokemon1]').value,
-                               document.querySelector('input[name=typesPokemon2]').value,
-                               document.querySelector('input[name=typesPokemon3]').value]
+                typesPokemon: typeSelected
         })
         .then( body => {
         alert('POKEMON WAS CREATED');
@@ -84,30 +105,12 @@ return (
                     autocomplete="off"
                 />
             </div>
-            <div className='divAllTypes'>
-                <div className='divTypesPokemon1'>        
-                    <label className='nameInput' htmlFor="nombre">Type1:</label>
-                    <input
-                        type="text"
-                        name="typesPokemon1"
-                        autocomplete="off"
-                    />
+            <div className='typesContainer'>
+                <div className='divTypesTitle'>
+                    <h3>Types</h3>
                 </div>
-                <div className='divTypesPokemon2'>        
-                    <label className='nameInput' htmlFor="nombre">Type2:</label>
-                    <input
-                        type="text"
-                        name="typesPokemon2"
-                        autocomplete="off"
-                    />
-                </div>
-                <div className='divTypesPokemon3'>        
-                    <label className='nameInput' htmlFor="nombre">Type3:</label>
-                    <input
-                        type="text"
-                        name="typesPokemon3"
-                        autocomplete="off"
-                    />
+                <div className='divAllTypes'>
+                    {types}
                 </div>
             </div>
             <div className='divSubmit'>

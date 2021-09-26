@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './pokeBoard.css';
 import Cards from '../Cards/Cards';
 import { getPokemons } from "../../redux/actions";
-import pokeBallLoading from '../../img/pokeBallLoading.gif'
+import pokeBallLoading from '../../img/pokeBallLoading.gif';
 
 function PokeBoard({pokemons, onCloseLocal}) {
     const dispatch = useDispatch();
