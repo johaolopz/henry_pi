@@ -8,7 +8,6 @@ function CreatePokemon() {
         e.preventDefault();
         axios.post('http://localhost:3001/pokemons', { 
                 name: document.querySelector('input[name=name]').value,
-                img: document.querySelector('input[name=img]').value,
                 life: document.querySelector('input[name=life]').value,
                 force: document.querySelector('input[name=force]').value,
                 defense: document.querySelector('input[name=defense]').value,
@@ -34,14 +33,6 @@ return (
                 <input
                     type="text"
                     name="name"
-                    autocomplete="off"
-                />
-            </div>
-            <div className='divImg'>        
-                <label className='nameInput' htmlFor="nombre">Image:</label>
-                <input
-                    type="text"
-                    name="img"
                     autocomplete="off"
                 />
             </div>

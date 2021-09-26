@@ -1,7 +1,8 @@
 export const GET_POKEMONS = 'GET_POKEMONS';
 export const ORDER_ASC_POKEMONS = 'ORDER_ASC_POKEMONS';
 export const ORDER_DESC_POKEMONS = 'ORDER_DESC_POKEMONS';
-export const ORDER_NUM_POKEMONS = 'ORDER_DESC_POKEMONS';
+export const ORDER_MAX_FORCE_POKEMONS = 'ORDER_MAX_FORCE_POKEMONS';
+export const ORDER_MIN_FORCE_POKEMONS = 'ORDER_MIN_FORCE_POKEMONS';
 
 export function getPokemons() {
     return function(dispatch) {
@@ -65,14 +66,14 @@ export function orderByDesc(array) {
   };
 }
 
-export function orderByNumber(array) {
+export function orderByMinForce(array) {
   const newArr = array.sort((a,b) => {
-    const numberA = a.id;
-    const numberB = b.id;
-    if (numberA < numberB) {
+    const forceA = a.force;
+    const forceB = b.force;
+    if (forceA < forceB) {
         return -1;
     }
-    if (numberA > numberB) {
+    if (forceA > forceB) {
         return 1;
     }
     return 0
@@ -80,7 +81,26 @@ export function orderByNumber(array) {
   const newArrInit = newArr.slice(0,9)
   const newTotal = newArr.length;
   return function(dispatch) {
-    return dispatch({ type: ORDER_NUM_POKEMONS, payload: newArr, init: newArrInit, total: newTotal });
+    return dispatch({ type: ORDER_MAX_FORCE_POKEMONS, payload: newArr, init: newArrInit, total: newTotal });
+  };
+}
+
+export function orderByMaxForce(array) {
+  const newArr = array.sort((a,b) => {
+    const forceA = a.force;
+    const forceB = b.force;
+    if (forceA < forceB) {
+        return 1;
+    }
+    if (forceA > forceB) {
+        return -1;
+    }
+    return 0
+    })
+  const newArrInit = newArr.slice(0,9)
+  const newTotal = newArr.length;
+  return function(dispatch) {
+    return dispatch({ type: ORDER_MIN_FORCE_POKEMONS, payload: newArr, init: newArrInit, total: newTotal });
   };
 }
 

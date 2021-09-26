@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const { v4: uuidv4 } = require('uuid');
 const router = Router();
-const { Pokemon } = require ("../db.js");
+const { Pokemon, Type } = require ("../db.js");
 const axios = require('axios');
 module.exports = router;
 
@@ -9,13 +9,13 @@ router.get('/', async (req, res) =>{
     const {name} = req.query;
     if (name) {
               let message = 'A CORRECT NAME IS NECESSARY';
-              let searchPokemon = await Pokemon.findOne(
-                {
-                  where: {
-                    name: name
-                  }
-                }
-              );
+              let searchPokemon = await Pokemon.findOne({
+                  where: { name: name },
+                  include: { model: Type}
+              });
+              if (searchPokemon){
+              searchPokemon.dataValues.typesPokemon = await Promise.all(searchPokemon.Types.map(async el => {return await el.name}))}
+              console.log(searchPokemon)
               if (!searchPokemon && isNaN(name)) {
                 try {
                   const resp = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
@@ -36,7 +36,13 @@ router.get('/', async (req, res) =>{
     }
     else {
           const lim = 40;
-          const dbPokemons = await Pokemon.findAll();
+          let dbTypesPoke = await Pokemon.findAll({
+            include:{model:Type}
+          });
+          const dbPokemons = await Promise.all(dbTypesPoke.map(async (elem)=>{
+            elem.dataValues.typesPokemon = await Promise.all(elem.Types.map(async el => {return await el.name}));
+            return await elem;
+          }));
           const resp = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${lim}&offset=0`);
           const apiPokemons = await Promise.all(resp.data.results.map(async (elem)=>{
                                 const resUrl = await axios.get(elem.url);
@@ -70,10 +76,10 @@ router.get('/:idPokemon', async (req, res) =>{
                           id : await resp.data.id,
                           name: await resp.data.name,
                           img : await resp.data.sprites.other.dream_world.front_default,
-                          life : await resp.data.base_experience,
-                          force : await resp.data.base_experience,
-                          defense : await resp.data.base_experience,
-                          speed : await resp.data.base_experience,
+                          life : await resp.data.stats[0].base_stat,
+                          force : await resp.data.stats[1].base_stat,
+                          defense : await resp.data.stats[2].base_stat,
+                          speed : await resp.data.stats[5].base_stat,
                           height : await resp.data.height,
                           weight : await resp.data.weight,
                           typesPokemon : await resp.data.types.map(elem => elem.type.name)
@@ -86,20 +92,25 @@ router.get('/:idPokemon', async (req, res) =>{
 });
 
 router.post('/', async (req, res)=>{
-  const {name, img, life, force, defense, speed, height, weight, typesPokemon}= req.body;
+  const {name, life, force, defense, speed, height, weight, typesPokemon}= req.body;
   try{
       const pokeCreate= await Pokemon.create({
           id: uuidv4(), 
           name,
-          img,
+          img: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/52.png',
           life,
           force,
           defense,
           speed,
           height,
-          weight,
-          typesPokemon
-      },{ fields: ["id","name","img","life","force","defense","speed","height","weight","typesPokemon"] });
+          weight
+      },{ fields: ["id","name","img","life","force","defense","speed","height","weight"] });
+
+      for(let i=0; i<typesPokemon.length; i++){
+        let idType= await Type.findOne({where:{name: typesPokemon[i]}})
+        await pokeCreate.addType(idType);
+      }
+
       pokeCreate && res.status(400).json(pokeCreate);
       }
   catch(error){

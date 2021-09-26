@@ -1,7 +1,7 @@
 import React from "react";
 import { LeftArrow, RightArrow } from "./ArrowsSvg";
 import './pagination.css';
-import { orderByAsc, orderByDesc, orderByNumber } from "../../redux/actions";
+import { orderByAsc, orderByDesc, orderByMaxForce, orderByMinForce } from "../../redux/actions";
 import { useDispatch, useSelector } from 'react-redux';
 
 const Pagination = ({ onLeftClick, onRightClick, page, totalPages }) => {
@@ -24,16 +24,22 @@ const Pagination = ({ onLeftClick, onRightClick, page, totalPages }) => {
                 dispatch(orderByDesc(pokemons2))
                 onLeftClick(true);
               }
-              if (e.target.value === 'Numeric')
+              if (e.target.value === 'MaxForce')
               {
-                dispatch(orderByNumber(pokemons2))
+                dispatch(orderByMaxForce(pokemons2))
+                onLeftClick(true);
+              }
+              if (e.target.value === 'MinForce')
+              {
+                dispatch(orderByMinForce(pokemons2))
                 onLeftClick(true);
               }
               console.log('DENTRO DEL SELECT',page)
               }}>
-            <option value="Ascendent" selected>A - Z</option>
-            <option value="Descendent" selected>Z - A</option>
-            <option value="Numeric">Numeric</option>
+            <option value="Ascendent" selected>A - Z (asc)</option>
+            <option value="Descendent" selected>Z - A (desc)</option>
+            <option value="MaxForce">Max_force</option>
+            <option value="MinForce">Min_force</option>
           </select>
         </div>
         <div className="pagination">
