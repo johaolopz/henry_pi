@@ -1,17 +1,15 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import './createPokemon.css';
 import axios from 'axios';
-import {useDispatch, useSelector} from 'react-redux';
-import { getTypes } from "../../redux/actions";
+import { useSelector } from 'react-redux';
 
 function CreatePokemon() {
-    const dispatch = useDispatch();
     const [typeSelected, setTypeSelected] = useState([]);
     const typesPokemons = useSelector(state => state.types);
 
-    useEffect( () => {
-        dispatch(getTypes());
-    },[])
+    // useEffect( () => {
+    //     dispatch(getTypes());
+    // },[])
 
     let types = '';
     let filtered = [];
@@ -46,64 +44,182 @@ function CreatePokemon() {
     }
 
 
+    //################ VALIDATIONS #############
+    const [input, setInput] = useState({
+        name: '',
+        life: '',
+        force: '',
+        defense: '',
+        speed: '',
+        height: '',
+        weight: ''
+      });
+      const [errors, setErrors] = useState({});
+    
+      const handleInputChange = function(e) {
+        setInput({
+          ...input,
+          [e.target.name]: e.target.value
+        });
+        setErrors(validate({
+          ...input,
+          [e.target.name]: e.target.value
+        }));
+      }
+
+    function validate(input) {
+        let errors = {};
+        if (!input.name) {
+          errors.name = 'Name is required';
+        }
+      
+        if (!input.life) {
+          errors.life = 'Input is required';
+        } else if (!/(?=.*[0-9])/.test(input.life)) {
+          errors.life = 'Value is invalid';
+        }
+
+        if (!input.force) {
+            errors.force = 'Input is required';
+          } else if (!/(?=.*[0-9])/.test(input.force)) {
+            errors.force = 'Value is invalid';
+          } 
+
+        if (!input.defense) {
+        errors.defense = 'Input is required';
+        } else if (!/(?=.*[0-9])/.test(input.defense)) {
+        errors.defense = 'Value is invalid';
+        }
+        
+        if (!input.speed) {
+        errors.speed = 'Input is required';
+        } else if (!/(?=.*[0-9])/.test(input.speed)) {
+        errors.speed = 'Value is invalid';
+        }
+
+        if (!input.height) {
+            errors.height = 'Input is required';
+          } else if (!/(?=.*[0-9])/.test(input.height)) {
+            errors.height = 'Value is invalid';
+          }
+        
+        if (!input.weight) {
+        errors.weight = 'Input is required';
+        } else if (!/(?=.*[0-9])/.test(input.weight)) {
+        errors.weight = 'Value is invalid';
+        } 
+      
+      return errors;
+      }
+
+
 return (
     <div className='cPokeContainer'>
         <form className='formCreate' onSubmit={handleSubmit}>    
-            <div className='divName'>        
-                <label className='nameInput' htmlFor="nombre">Name:</label>
-                <input
-                    type="text"
-                    name="name"
-                    autocomplete="off"
-                />
+            <div className='divInputs'>
+                <div className='divInputName'>        
+                    <label className='nameInput' htmlFor="nombre">Name:</label>
+                    <input
+                        className='inputs'
+                        type="text"
+                        name="name"
+                        value={input.name}
+                        placeholder="Name..."
+                        onChange={handleInputChange}
+                        autocomplete="off"
+                    />
+                </div>
+                {errors.name && (<div className='divErrors'><span></span><p className="danger">{errors.name}</p></div>)}
             </div>
-            <div className='divLife'>        
-                <label className='nameInput' htmlFor="nombre">Life:</label>
-                <input
-                    type="text"
-                    name="life"
-                    autocomplete="off"
-                />
+            <div className='divInputs'>
+                <div className='divInputLife'>      
+                    <label className='nameInput' htmlFor="nombre">Life:</label>
+                    <input
+                        type="text"
+                        name="life"
+                        autocomplete="off"
+                        className='inputs'
+                        value={input.life}
+                        placeholder="123"
+                        onChange={handleInputChange}
+                    />
+                </div>
+                {errors.life && (<div className='divErrors'><span></span><p className="danger">{errors.life}</p></div>)}
             </div>
-            <div className='divForce'>        
-                <label className='nameInput' htmlFor="nombre">Force:</label>
-                <input
-                    type="text"
-                    name="force"
-                    autocomplete="off"
-                />
+            <div className='divInputs'>
+                <div className='divInputForce'>        
+                    <label className='nameInput' htmlFor="nombre">Force:</label>
+                    <input
+                        type="text"
+                        name="force"
+                        autocomplete="off"
+                        className='inputs'
+                        value={input.force}
+                        placeholder="123"
+                        onChange={handleInputChange}
+                    />
+                </div>
+                {errors.force && (<div className='divErrors'><span></span><p className="danger">{errors.force}</p></div>)}
             </div>
-            <div className='divDefense'>        
-                <label className='nameInput' htmlFor="nombre">Defense:</label>
-                <input
-                    type="text"
-                    name="defense"
-                    autocomplete="off"
-                />
+            <div className='divInputs'>
+                <div className='divInputDefense'>      
+                    <label className='nameInput' htmlFor="nombre">Defense:</label>
+                    <input
+                        type="text"
+                        name="defense"
+                        autocomplete="off"
+                        className='inputs'
+                        value={input.defense}
+                        placeholder="123"
+                        onChange={handleInputChange}
+                    />
+                </div>
+                {errors.defense && (<div className='divErrors'><span></span><p className="danger">{errors.defense}</p></div>)}
             </div>
-            <div className='divSpeed'>        
-                <label className='nameInput' htmlFor="nombre">Speed:</label>
-                <input
-                    type="text"
-                    name="speed"
-                    autocomplete="off"
-                />
+            <div className='divInputs'>
+                <div className='divInputSpeed'>      
+                    <label className='nameInput' htmlFor="nombre">Speed:</label>
+                    <input
+                        type="text"
+                        name="speed"
+                        autocomplete="off"
+                        className='inputs'
+                        value={input.speed}
+                        placeholder="123"
+                        onChange={handleInputChange}
+                    />
+                </div>
+                {errors.speed && (<div className='divErrors'><span></span><p className="danger">{errors.speed}</p></div>)}
             </div>
-            <div className='divHeight'>        
-                <label className='nameInput' htmlFor="nombre">Height:</label>
-                <input
-                    type="text"
-                    name="height"
-                    autocomplete="off"
-                />
+            <div className='divInputs'>  
+                <div className='divInputHeight'>      
+                    <label className='nameInput' htmlFor="nombre">Height:</label>
+                    <input
+                        type="text"
+                        name="height"
+                        autocomplete="off"
+                        className='inputs'
+                        value={input.height}
+                        placeholder="123"
+                        onChange={handleInputChange}
+                    />
+                </div>
+                {errors.height && (<div className='divErrors'><span></span><p className="danger">{errors.height}</p></div>)}
             </div>
-            <div className='divWeight'>        
-                <label className='nameInput' htmlFor="nombre">Weight:</label>
-                <input
-                    type="text"
-                    name="weight"
-                    autocomplete="off"
-                />
+            <div className='divInputs'>
+                <div className='divInputWeight'>    
+                    <label className='nameInput' htmlFor="nombre">Weight:</label>
+                    <input
+                        type="text"
+                        name="weight"
+                        autocomplete="off"
+                        className='inputs'
+                        value={input.weight}
+                        placeholder="123"
+                        onChange={handleInputChange}
+                    />
+                </div>
+                {errors.weight && (<div className='divErrors'><span></span><p className="danger">{errors.weight}</p></div>)}
             </div>
             <div className='typesContainer'>
                 <div className='divTypesTitle'>

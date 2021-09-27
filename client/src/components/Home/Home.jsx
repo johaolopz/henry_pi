@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Pagination from "../Pagination/Pagination";
 import './home.css';
 import bg_Home from '../../img/bg_Home.png';
@@ -7,16 +7,22 @@ import PokeBoard from "../PokeBoard/PokeBoard.jsx";
 import Pokemon from '../Pokemon/Pokemon.jsx';
 import CreatePokemon from '../CreateForm/CreatePokemon';
 import { Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import {getPokemons} from "../../redux/actions";
 
 function Home() {
     document.body.style = `background-image: url("${bg_Home}");`;
+    const dispatch = useDispatch();
     const [pokemons, setpokemons] = useState([]);
     const pokemons2 = useSelector(state => state.pokemons);
     //### PAGINATION ###
     const [page, setPage] = useState(0);
     const total = useSelector(state => state.total);
     const [pokeInPage, setPokeInPage] = useState([]);
+
+    useEffect( () => {
+      dispatch(getPokemons());}
+  ,[]);
 
     const lastPage = (arg) => {
       let nextPage;
@@ -52,7 +58,7 @@ function Home() {
       setPokeInPage(arrPoke)
     };
 
-    function onSearch(namePokemon) {
+    const onSearch = useCallback((namePokemon) => {
         //Llamado a la API local
         fetch(`http://localhost:3001/pokemons?name=${namePokemon}`)
           .then(r => r.json())
@@ -79,11 +85,11 @@ function Home() {
             else {
               alert(recurso.message);
             }});
-      }
+      },[])
 
-    function onCloseLocal() {
+    const onCloseLocal = useCallback(() => {
       setpokemons([]);
-    }
+    },[])
 
     function onFilterLocal(pokeId) {
       let pokemon = pokemons.filter(c => c.id.toString() === pokeId.toString());
@@ -93,11 +99,16 @@ function Home() {
       return pokemon[0];
     }
 
+    // function onFilterBy(type) {
+    //   let pokemon = pokemons2.filter(c => c.typesPokemon.includes(type));
+    //   setpokemons(pokemon);
+    // }
+
     return (
         <div className='divHome'>
           <Route
             path='/pokemon'
-            render={() => <Nav onSearch={onSearch} />}
+            render={() => <Nav onSearch={(el) => onSearch(el)} />}
           />
           <Route
             exact

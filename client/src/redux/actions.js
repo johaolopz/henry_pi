@@ -4,6 +4,9 @@ export const ORDER_DESC_POKEMONS = 'ORDER_DESC_POKEMONS';
 export const ORDER_MAX_FORCE_POKEMONS = 'ORDER_MAX_FORCE_POKEMONS';
 export const ORDER_MIN_FORCE_POKEMONS = 'ORDER_MIN_FORCE_POKEMONS';
 export const GET_TYPES = 'GET_TYPES';
+export const FILTER_CREATED_POKEMONS = 'FILTER_CREATED_POKEMONS';
+export const FILTER_BY_POKEMONS = 'FILTER_BY_POKEMONS';
+export const FILTER_BY_ALL = 'FILTER_BY_ALL';
 
 export function getPokemons() {
     return async function(dispatch) {
@@ -114,6 +117,24 @@ export function getTypes() {
       dispatch({ type: GET_TYPES, payload: json.map(elem => elem.name)})
     })
   }
+}
+
+export function filterBy(type) {
+  return function(dispatch) {
+    return dispatch({ type: FILTER_BY_POKEMONS, payload: type});
+  };
+}
+
+export function filterByCreated() {
+  return function(dispatch) {
+    return dispatch({ type: FILTER_CREATED_POKEMONS });
+  };
+}
+
+export function filterByAll() {
+  return function(dispatch) {
+    return dispatch({ type: FILTER_BY_ALL });
+  };
 }
 
 

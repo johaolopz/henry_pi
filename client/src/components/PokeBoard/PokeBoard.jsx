@@ -1,18 +1,12 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import React, { memo } from "react";
+import { useSelector } from 'react-redux';
 import './pokeBoard.css';
 import Cards from '../Cards/Cards';
-import { getPokemons } from "../../redux/actions";
 import pokeBallLoading from '../../img/pokeBallLoading.gif';
 
-function PokeBoard({pokemons, onCloseLocal}) {
-    const dispatch = useDispatch();
+const PokeBoard = memo(({pokemons, onCloseLocal}) => {
     const pokeInit = useSelector(state => state.pokeInit);
     const loadPage = useSelector(state => state.loadPage);
-
-    useEffect( () => {
-        dispatch(getPokemons());
-    },[])
 
     // if (pokemons[0] !== undefined){
     //     pokemons.map(elem => {
@@ -27,7 +21,7 @@ function PokeBoard({pokemons, onCloseLocal}) {
             {!loadPage ? (
                 <div className='divLoading'>
                     <img className='loadPokemons' src={pokeBallLoading} alt='not forund' />
-                    <p className='pLoadPokemons'>Loading...</p>)
+                    <p className='pLoadPokemons'>Loading...</p>
                 </div>) :
             (<div className='cardsArea'>
                 <Cards pokemons={pokemons[0] !== undefined ? pokemons : pokeInit}
@@ -35,6 +29,6 @@ function PokeBoard({pokemons, onCloseLocal}) {
             </div>)}
         </div>
     );
-}
+});
 
 export default PokeBoard;

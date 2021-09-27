@@ -30,9 +30,9 @@ router.get('/', async (req, res) =>{
                   message = "POKEMON DOESN'T EXIST";
                 }}
               if (searchPokemon) {
-                  res.status(400).json(searchPokemon);
+                  res.status(200).json(searchPokemon);
               }
-              else res.status(200).json({message: message})
+              else res.status(400).json({message: message})
     }
     else {
           const lim = 40;
@@ -54,7 +54,7 @@ router.get('/', async (req, res) =>{
           let allPokemons = dbPokemons.concat(apiPokemons);
           const count = allPokemons.length;
           const arrInit = allPokemons.slice(0,9)
-          res.status(400).json({total: count, init: arrInit, results: allPokemons});
+          res.status(200).json({total: count, init: arrInit, results: allPokemons});
           }
 });
 
@@ -86,9 +86,9 @@ router.get('/:idPokemon', async (req, res) =>{
                         };
         }
   if (searchPokemon) {
-    res.status(400).json(searchPokemon);}
+    res.status(200).json(searchPokemon);}
   else {
-    res.status(200).json({message: "ID don't exist"})}
+    res.status(400).json({message: "ID don't exist"})}
 });
 
 router.post('/', async (req, res)=>{
@@ -111,9 +111,9 @@ router.post('/', async (req, res)=>{
         await pokeCreate.addType(idType);
       }
 
-      pokeCreate && res.status(400).json(pokeCreate);
+      pokeCreate && res.status(200).json(pokeCreate);
       }
   catch(error){
-      res.status(200).json({message:error});
+      res.status(400).json({message:error});
   }
 });
