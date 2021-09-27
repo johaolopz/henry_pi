@@ -9,10 +9,7 @@ const Pagination = ({ onLeftClick, onRightClick, page, totalPages }) => {
   const dispatch = useDispatch();
   const typesArray = useSelector(state => state.types)
 
-  let typesList = '';
-  if (typesArray !== undefined){
-    typesList = typesArray.map((elem) => <option value={elem}>{elem}</option>)
-  }
+  let typesList = typesArray.map((elem) => <option value={elem}>{elem}</option>)
 
   return (
     <div className='pageContainer'>
@@ -69,14 +66,17 @@ const Pagination = ({ onLeftClick, onRightClick, page, totalPages }) => {
               if (e.target.value === 'CreatedPokemons')
               {
                 dispatch(filterByCreated());
+                onLeftClick(true);
               }
-              if (e.target.value === 'AllPokemons')
+              else if (e.target.value === 'AllPokemons')
               {
                 dispatch(filterByAll());
+                onLeftClick(true);
               }
-              if (e.target.value !== 'CreatedPokemons' && e.target.value !== 'AllPokemons')
+              else
               {
                 dispatch(filterBy(e.target.value,));
+                onLeftClick(true);
               }
               }}>
             <option value="AllPokemons">All Pokemons</option>

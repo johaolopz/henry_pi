@@ -32,10 +32,7 @@ function Home() {
       }
       setPage(nextPage);
       let arrPoke = [];
-      if(nextPage === 0) {
-        arrPoke = pokemons2.slice(0,9)
-      }
-      else {
+      if(nextPage !== 0) {
         let index = 12*(nextPage-1)+8;
         for (let i=0; i<12; i++) {
           index++;
@@ -118,6 +115,7 @@ function Home() {
               totalPages={total}
               onLeftClick={lastPage}
               onRightClick={nextPage}
+              setPage={setPage}
             />) : ('')}
           />
           <Route

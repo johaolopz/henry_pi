@@ -22,7 +22,7 @@ function CreatePokemon() {
                 setTypeSelected(filtered)
             }
                 }
-        types = typesPokemons.map((elem) => <label><input type="checkbox" onChange={handled} className="ckbox" value={elem} /> {elem}</label>)
+        types = typesPokemons.map((elem) => <label><input type="checkbox" onChange={handled} disabled={typeSelected===[] ? true : false} className="ckbox" value={elem} /> {elem}</label>)
     }
 
     const handleSubmit = e => {
@@ -40,6 +40,15 @@ function CreatePokemon() {
         .then( body => {
         alert('POKEMON WAS CREATED');
         console.log(body);
+        setInput({
+            name: '',
+        life: '',
+        force: '',
+        defense: '',
+        speed: '',
+        height: '',
+        weight: ''
+        });
         });
     }
 
@@ -109,6 +118,7 @@ function CreatePokemon() {
         errors.weight = 'Value is invalid';
         } 
       
+        document.getElementsByClassName('submitForm').disabled=false;
       return errors;
       }
 
@@ -230,7 +240,7 @@ return (
                 </div>
             </div>
             <div className='divSubmit'>
-                <input type="submit" value="Create" />        
+                <input type="submit" className='submitForm' value="Create" />        
             </div>
         </form>
     </div>
