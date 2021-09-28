@@ -28,6 +28,35 @@
   color: #61dafb;
 }
 
+.divError {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 100px;
+  justify-content: center;
+  width: 100%;
+}
+
+.divAlert{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  background-color: rgba(172, 0, 0, 0.431);
+  height: 250%;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgb(255, 68, 68);
+}
+
+.divAlert h1{
+  display: flex;
+  color: white;
+  font-weight: bold;
+  font-size: 60px;
+  -webkit-text-stroke: 1px rgb(238, 255, 0);
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

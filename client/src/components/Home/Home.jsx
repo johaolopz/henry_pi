@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {getPokemons} from "../../redux/actions";
 
 function Home() {
+  const error = useSelector(state => state.error);
     document.body.style = `background-image: url("${bg_Home}");`;
     const dispatch = useDispatch();
     const [pokemons, setpokemons] = useState([]);
@@ -102,6 +103,8 @@ function Home() {
     // }
 
     return (
+      <div className='divGlobal'>{ (error) ? <div className='divError'><div className='divAlert'>
+      <h1>{error}</h1></div></div> : (
         <div className='divHome'>
           <Route
             path='/pokemon'
@@ -138,7 +141,8 @@ function Home() {
           render={({match}) => <Pokemon
                 pokemon={onFilterLocal(match.params.pokeId)}/>}
           />
-        </div>
+        </div>)
+      }</div>
     );
 }
 

@@ -11,7 +11,11 @@ export const FILTER_BY_ALL = 'FILTER_BY_ALL';
 export function getPokemons() {
     return async function(dispatch) {
             return await fetch("http://localhost:3001/pokemons")
-            .then(response => response.json())
+            .then(response => {
+              if(!response.ok){
+                throw Error('NO SE PUDO CONECTAR A LA API');
+              }
+              return response.json()})
             .then(async json => {
               await Promise.all(json.results.map(async (elem,index) => {
                 await fetch(`http://localhost:3001/pokemons/${elem.id}`)
@@ -25,10 +29,10 @@ export function getPokemons() {
                 json.results[index].weight = await json2.weight;
                 })
               }));
-              return json
+              return json;
           })
-          .then(json3 => {
-            dispatch({ type: GET_POKEMONS, payload: json3.results, init: json3.init, total: json3.total})})
+          .then(json3 => dispatch({ type: GET_POKEMONS, payload: json3.results, init: json3.init, total: json3.total, load:true, error: undefined}))
+          .catch(() => dispatch({ type: GET_POKEMONS, payload: [], init:[], total:[], load: false, error: 'NO SE PUDO CONECTAR A LA API'}))
 }}
 
 
@@ -114,9 +118,8 @@ export function getTypes() {
   return async function(dispatch) {
     return await fetch("http://localhost:3001/types")
     .then(response => response.json())
-    .then(json => {
-      dispatch({ type: GET_TYPES, payload: json.map(elem => elem.name)})
-    })
+    .then(json => dispatch({ type: GET_TYPES, payload: json.map(elem => elem.name), error: undefined}))
+    .catch(() => dispatch({ type: GET_TYPES, payload: [], error: 'NO SE PUDO CONECTAR A LA API'}))
   }
 }
 

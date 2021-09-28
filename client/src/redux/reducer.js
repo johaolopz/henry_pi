@@ -7,7 +7,8 @@ const initialState = {
     pokemons: [],
     loadPage: false,
     total: 0,
-    types: []
+    types: [],
+    error: undefined
 }
 
 
@@ -19,8 +20,9 @@ export default function reducer(state = initialState, action) {
                 pokesAll: action.payload,
                 pokeInit: action.init,
                 pokemons: action.payload,
-                loadPage: true,
-                total: Math.ceil((action.total-9) / 12) + 1
+                loadPage: action.load,
+                total: Math.ceil((action.total-9) / 12) + 1,
+                error: action.error
             }
         case ORDER_ASC_POKEMONS:
             return {
@@ -56,7 +58,8 @@ export default function reducer(state = initialState, action) {
         }
         case GET_TYPES:
             return {...state,
-                    types: action.payload
+                    types: action.payload,
+                    error: action.error
             }
         case FILTER_BY_POKEMONS:
             let pokeFilter = state.pokesAll.filter(c => c.typesPokemon.includes(action.payload));
