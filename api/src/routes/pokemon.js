@@ -15,7 +15,6 @@ router.get('/', async (req, res) =>{
               });
               if (searchPokemon){
               searchPokemon.dataValues.typesPokemon = await Promise.all(searchPokemon.Types.map(async el => {return await el.name}))}
-              console.log(searchPokemon)
               if (!searchPokemon && isNaN(name)) {
                 try {
                   const resp = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);

@@ -38,10 +38,11 @@ const Pagination = ({ onLeftClick, onRightClick, page, totalPages }) => {
                 onLeftClick(true);
               }
               }}>
+            <option disabled selected>Select an option</option>
             <option value="Ascendent">A - Z (asc)</option>
-            <option value="Descendent" selected>Z - A (desc)</option>
-            <option value="MaxForce">Max_force</option>
-            <option value="MinForce">Min_force</option>
+            <option  value="Descendent">Z - A (desc)</option>
+            <option  value="MaxForce">Max_force</option>
+            <option  value="MinForce">Min_force</option>
           </select>
         </div>
         <div className="pagination">
@@ -79,8 +80,9 @@ const Pagination = ({ onLeftClick, onRightClick, page, totalPages }) => {
                 onLeftClick(true);
               }
               }}>
+            <option disabled selected>Select a filter</option>
             <option value="AllPokemons">All Pokemons</option>
-            <option value="CreatedPokemons" selected>Created by us</option>
+            <option value="CreatedPokemons">Created by me</option>
             {typesList}
           </select>
         </div>

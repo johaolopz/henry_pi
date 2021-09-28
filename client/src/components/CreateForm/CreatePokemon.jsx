@@ -1,11 +1,13 @@
 import React, {useState} from "react";
 import './createPokemon.css';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import {getPokemons} from '../../redux/actions';
 
 function CreatePokemon() {
     const [typeSelected, setTypeSelected] = useState([]);
     const typesPokemons = useSelector(state => state.types);
+    const dispatch = useDispatch();
 
     // useEffect( () => {
     //     dispatch(getTypes());
@@ -28,7 +30,7 @@ function CreatePokemon() {
     const handleSubmit = e => {
         e.preventDefault();
         axios.post('http://localhost:3001/pokemons', { 
-                name: document.querySelector('input[name=name]').value,
+                name: document.querySelector('input[name=name]').value.toLowerCase(),
                 life: document.querySelector('input[name=life]').value,
                 force: document.querySelector('input[name=force]').value,
                 defense: document.querySelector('input[name=defense]').value,
@@ -39,7 +41,6 @@ function CreatePokemon() {
         })
         .then( body => {
         alert('POKEMON WAS CREATED');
-        console.log(body);
         setInput({
             name: '',
         life: '',
@@ -49,7 +50,8 @@ function CreatePokemon() {
         height: '',
         weight: ''
         });
-        });
+        dispatch(getPokemons());    
+    });
     }
 
 

@@ -22,7 +22,7 @@ function Home() {
 
     useEffect( () => {
       dispatch(getPokemons());}
-  ,[]);
+    ,[]);
 
     const lastPage = (arg) => {
       let nextPage;
@@ -59,7 +59,7 @@ function Home() {
         //Llamado a la API local
         fetch(`http://localhost:3001/pokemons?name=${namePokemon}`)
           .then(r => r.json())
-          .then(async (recurso) => {
+          .then((recurso) => {
             if(recurso.name !== undefined){
               const pokemon = {
                 id: recurso.id,

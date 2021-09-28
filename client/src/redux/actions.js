@@ -12,8 +12,8 @@ export function getPokemons() {
     return async function(dispatch) {
             return await fetch("http://localhost:3001/pokemons")
             .then(response => response.json())
-            .then(json => {
-              Promise.all(json.results.map(async (elem,index) => {
+            .then(async json => {
+              await Promise.all(json.results.map(async (elem,index) => {
                 await fetch(`http://localhost:3001/pokemons/${elem.id}`)
                 .then(r => r.json())
                 .then(async json2 => {
@@ -27,7 +27,8 @@ export function getPokemons() {
               }));
               return json
           })
-          .then(json3 => dispatch({ type: GET_POKEMONS, payload: json3.results, init: json3.init, total: json3.total}))
+          .then(json3 => {
+            dispatch({ type: GET_POKEMONS, payload: json3.results, init: json3.init, total: json3.total})})
 }}
 
 

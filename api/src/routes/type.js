@@ -5,5 +5,5 @@ module.exports = router;
 
 router.get('/', async (req, res) =>{
     const dbTypes = await Type.findAll();
-    res.status(400).json(dbTypes);
+    res.status(200).json(dbTypes);
 });
