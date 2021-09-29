@@ -15,6 +15,7 @@ label {
 
 .pagination-btn {
     display: flex;
+    height: 25px;
 }
 
 .pages {

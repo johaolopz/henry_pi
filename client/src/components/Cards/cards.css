@@ -3,3 +3,10 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+
+.divNotFound {
+  color: red;
+  -webkit-text-stroke: 0.8px white;
+  font-size: 15px;
+  margin-bottom: -5px;
+}
