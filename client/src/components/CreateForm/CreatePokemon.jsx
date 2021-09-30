@@ -6,6 +6,7 @@ import {getPokemons} from '../../redux/actions';
 
 function CreatePokemon() {
     const [typeSelected, setTypeSelected] = useState([]);
+    const [activeChecks, setActiveChecks] = useState(undefined);
     const typesPokemons = useSelector(state => state.types);
     const dispatch = useDispatch();
 
@@ -24,11 +25,12 @@ function CreatePokemon() {
                 setTypeSelected(filtered)
             }
                 }
-        types = typesPokemons.map((elem) => <label><input type="checkbox" onChange={handled} disabled={typeSelected===[] ? true : false} className="ckbox" value={elem} /> {elem}</label>)
+        types = typesPokemons.map((elem) => <label><input type="checkbox" onChange={handled} className="ckbox" value={elem} checked={activeChecks} /> {elem}</label>)
     }
 
     const handleSubmit = e => {
         e.preventDefault();
+        if (Object.values(input).includes('')) return alert('FORM INCOMPLETE');
         axios.post('http://localhost:3001/pokemons', { 
                 name: document.querySelector('input[name=name]').value.toLowerCase(),
                 life: document.querySelector('input[name=life]').value,
@@ -50,7 +52,10 @@ function CreatePokemon() {
         height: '',
         weight: ''
         });
-        dispatch(getPokemons());    
+        setActiveChecks(false);
+        setTypeSelected([]);
+        setActiveChecks(undefined);
+        dispatch(getPokemons());
     });
     }
 
@@ -120,7 +125,7 @@ function CreatePokemon() {
         errors.weight = 'Value is invalid';
         } 
       
-        document.getElementsByClassName('submitForm').disabled=false;
+        // document.getElementsByClassName('submitForm').disabled=false;
       return errors;
       }
 
@@ -242,7 +247,7 @@ return (
                 </div>
             </div>
             <div className='divSubmit'>
-                <input type="submit" className='submitForm' value="Create" />        
+                <input type="submit" className='submitForm' value="Create" />
             </div>
         </form>
     </div>
